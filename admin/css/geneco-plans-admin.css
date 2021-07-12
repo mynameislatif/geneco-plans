@@ -1,0 +1,37 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.layer-genecoAdmin {}
+
+.layer-genecoAdmin .nav-tab-active {
+    background-color: transparent;
+}
+
+.layer-genecoAdmin form h2 {
+    display: none;
+}
+
+.layer-genecoAdmin .wrapper-genecoAdmin .layer-section {
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: 15px 0 0;
+    padding: 15px;
+}
+
+.wrapper-genecoAdmin h2 {
+    border-bottom: 1px solid #D9D9D9;
+    font-style: italic;
+    margin: 0 0 15px;
+    padding: 0 0 10px;
+}
+
+.wrapper-genecoAdmin p.submit {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.wrapper-genecoAdmin .layer-preCode {
+    overflow-y: auto;
+}

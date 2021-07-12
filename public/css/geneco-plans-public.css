@@ -1,0 +1,52 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.layer-genecoPlans {
+    background-color: transparent;
+}
+
+.layer-genecoPlan {
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: 0 0 15px;
+    min-height: 500px;
+    padding: 15px;
+    position: relative;
+}
+
+.layer-genecoPlan h2 {
+    font-size: 30px;
+    border-bottom: 1px solid #D9D9D9;
+    margin: 0 0 10px;
+    padding: 0 0 10px;
+}
+
+.layer-genecoPlan h4 {
+    font-size: 100%;
+    font-style: italic;
+    margin: 0 0 20px;
+    text-transform: capitalize;
+}
+
+.layer-genecoPlan p {
+    font-size: 100%;
+}
+
+.layer-genecoPlan p.panel-link {
+    bottom: 15px;
+    left: 15px;
+    margin: 0;
+    position: absolute;
+    right: 15px;
+}
+
+.layer-genecoPlan p.panel-link a {
+    width: 100%;
+}
+
+.color-white { color: #FFF; }
+
+
+/* .site-content .content-area .entry-content .container { max-width: 100% !important; width: 100% !important; } */
