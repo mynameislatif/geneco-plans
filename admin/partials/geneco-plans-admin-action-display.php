@@ -63,6 +63,15 @@
                 $has_plans  = true;
                 $plans_obj  = json_decode(unserialize($plans_data));
         ?>
+
+        <?php if (defined('GENAPI_SHORTCODE')) : ?>
+        <div class="layer-section">
+            <h2>Shortcode</h2>
+            <p><em>You may use the following shortcode to display all the plans on your page:</em></p>
+            <h4>[<?php echo GENAPI_SHORTCODE; ?>]</h4>
+        </div>
+        <?php endif; ?>
+
         <div class="layer-section">
             <div class="layer-preCode">
                 <h2>Plans Data Object</h2>
