@@ -61,7 +61,6 @@ class Geneco_Plans_Public
      */
     public function enqueue_styles()
     {
-        // wp_enqueue_style($this->plugin_name."-bootstrap", plugin_dir_url(__FILE__) . 'css/bootstrap.min.css', array(), $this->version, 'all');
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/geneco-plans-public.css', array(), $this->version, 'all');
     }
 
@@ -72,13 +71,14 @@ class Geneco_Plans_Public
      */
     public function enqueue_scripts()
     {
-        // wp_enqueue_script($this->plugin_name."-bootstrap", plugin_dir_url(__FILE__) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false);
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/geneco-plans-public.js', array( 'jquery' ), $this->version, false);
+
+        $this->enqueue_js_variable_data();
     }
 
     /**
      * Register the shortcode for the public-facing side of the site.
-     * 
+     *
      * @since    1.0.0
      */
     public function register_shortcode()
@@ -88,11 +88,28 @@ class Geneco_Plans_Public
 
     /**
      * Display the plans HTML rendered from the plans data for the public-facing side of the site.
-     * 
+     *
      * @since    1.0.0
      */
     public function plans_html()
     {
         require_once plugin_dir_path(dirname(__FILE__)).'public/partials/geneco-plans-display.php';
+    }
+
+    /**
+     * Localize the script for js variable usage
+     * 
+     * @since    1.0.2
+     */
+    public function enqueue_js_variable_data()
+    {
+        $geneco_obj = [];
+        $plans_data = get_option('genapi_plans_data');
+
+        if ($plans_data) {
+            $geneco_obj['data'] = json_decode(unserialize($plans_data));
+        }
+
+        wp_localize_script($this->plugin_name, 'genecoObj', $geneco_obj);
     }
 }

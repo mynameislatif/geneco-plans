@@ -28,7 +28,7 @@ if (! defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('GENECO_PLANS_VERSION', '1.0.0');
+define('GENECO_PLANS_VERSION', '1.0.2');
 
 /**
  * Prefix for all plugin's options.
