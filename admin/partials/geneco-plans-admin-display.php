@@ -16,6 +16,9 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
 <div class="wrap layer-genecoAdmin">
+    <div class="page-header">
+        <h1>Geneco Plans <span class="span-version"><em>v<?php echo GENECO_PLANS_VERSION; ?></em></span></h1>
+    </div>
     <div class="nav-tab-wrapper">
         <a href="javascript:void(0)" class="nav-tab nav-tab-active">API Information Settings</a>
         <a href="?page=geneco-plans-action" class="nav-tab">Pull Plans Action</a>

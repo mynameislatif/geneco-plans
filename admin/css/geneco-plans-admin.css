@@ -5,6 +5,19 @@
 
 .layer-genecoAdmin {}
 
+.layer-genecoAdmin .page-header {
+    margin: 0 0 10px;
+}
+
+.layer-genecoAdmin .page-header h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.layer-genecoAdmin .page-header h1 .span-version {
+    font-size: 13px;
+}
+
 .layer-genecoAdmin .nav-tab-active {
     background-color: transparent;
 }

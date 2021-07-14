@@ -16,6 +16,9 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
 <div class="wrap layer-genecoAdmin">
+    <div class="page-header">
+        <h1>Geneco Plans <span class="span-version"><em>v<?php echo GENECO_PLANS_VERSION; ?></em></span></h1>
+    </div>
     <div class="nav-tab-wrapper">
         <a href="?page=geneco-plans" class="nav-tab">API Information Settings</a>
         <a href="javascript:void(0)" class="nav-tab nav-tab-active">Pull Plans Action</a>
@@ -66,9 +69,26 @@
 
         <?php if (defined('GENAPI_SHORTCODE')) : ?>
         <div class="layer-section">
-            <h2>Shortcode</h2>
-            <p><em>You may use the following shortcode to display all the plans on your page:</em></p>
-            <h4>[<?php echo GENAPI_SHORTCODE; ?>]</h4>
+            <h2>Usage</h2>
+            <div class="layer-usages">
+                <div class="layer-usage">
+                    <h3>Shortcode:</h3>
+                    <code>[<?php echo GENAPI_SHORTCODE; ?>]</code>
+                    <p><em>You may use this shortcode to display all the plans on your page</em></p>
+                </div>
+                <div class="layer-usage">
+                    <h3>PHP:</h3>
+                    <code>get_option('genapi_plans_data')</code>
+                    <p><em>You may use this function inside the <code>&lt;?php ?&gt;</code> block</em></p>
+                </div>
+                <div class="layer-usage">
+                    <h3>JavaScript:</h3>
+                    <code>genecoObj</code>
+                    <em>or</em>
+                    <code>genecoObj.data</code>
+                    <p><em>You may use these variables directly inside your JavaScript scripts</em></p>
+                </div>
+            </div>
         </div>
         <?php endif; ?>
 
