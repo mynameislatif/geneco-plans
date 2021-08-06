@@ -9,7 +9,7 @@
  * Plugin Name:       Geneco Plans
  * Plugin URI:        https://geneco.sg
  * Description:       Plugin to pull and show the plans for Geneco.sg website.
- * Version:           1.0.3
+ * Version:           1.1.0
  * Author:            YTL Digital Design [AL Latif Mohamad]
  * Author URI:        https://www.ytl.com/technology.asp
  * License:           GPL-2.0+
@@ -24,11 +24,10 @@ if (! defined('WPINC')) {
 }
 
 /**
- * Currently plugin version.
+ * Current plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
  */
-define('GENECO_PLANS_VERSION', '1.0.3');
+define('GENECO_PLANS_VERSION', '1.1.0');
 
 /**
  * Prefix for all plugin's options.
@@ -84,3 +83,68 @@ function run_geneco_plans()
     $plugin->run();
 }
 run_geneco_plans();
+
+
+/**
+ * Function to pull rates from API
+ * 
+ * @since    1.1.0
+ * 
+ * @param    array      $plans      Object array of plans which can be retrieved from the database - get_option('genapi_plans_data')
+ * @return   array
+ */
+function geneco_pull_rates_api($plans = [])
+{
+    $return         = ['args' => [], 'data' => []];
+    $genapi_options = get_option('genapi_settings');
+    $rates_api_url  = $genapi_options['genapi_rates_api_url'];
+
+    if ($rates_api_url) {
+        $rates_params   = [];
+        $cur_date       = date('Y-m-d');
+        $contract_date  = date('Y-m-d', strtotime($cur_date . ' + 28 days'));
+    
+        foreach ($plans as $plan) {
+            $rate_reference = $plan->RateReference;
+            $plan_code      = $plan->ReferenceCode;
+    
+            if ($rate_reference && $plan_code) {
+                $rates_param    = [
+                    'PlanName'      => $plan->Name, 
+                    'ContractDate'  => $contract_date, 
+                    'RateReference' => $rate_reference, 
+                    'PlanCode'      => $plan_code 
+                ];
+                $rates_params[] = $rates_param;
+            }
+        }
+    
+        $response   = wp_remote_post($rates_api_url, [
+            'headers'       => array('Content-Type' => 'application/json; charset=utf-8'),
+            'body'          => json_encode($rates_params),
+            'data_format'   => 'body'
+        ]);
+        $return     = [
+            'args'  => $rates_params, 
+            'data'  => json_decode($response['body']) 
+        ];
+    }
+    
+    return $return;
+}
+
+
+/**
+ * Function to get plans without arguments. This function will get the plan data and continue pulling the rates through API
+ * 
+ * @since    1.1.0
+ * 
+ * @return   array
+ */
+function get_plans_rates() 
+{
+    $plans_data = get_option('genapi_plans_data');
+    $plans      = json_decode(unserialize($plans_data));
+
+    return geneco_pull_rates_api($plans);
+}

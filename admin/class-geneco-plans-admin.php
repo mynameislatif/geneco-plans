@@ -55,7 +55,8 @@ class Geneco_Plans_Admin
      *
      * @since    1.0.0
      * @param      string    $plugin_name       The name of this plugin.
-     * @param      string    $version    The version of this plugin.
+     * @param      string    $version           The version of this plugin.
+     * @param      string    $prefix            The prefix used in this plugin.
      */
     public function __construct($plugin_name, $version, $prefix)
     {
@@ -140,7 +141,7 @@ class Geneco_Plans_Admin
 
         add_settings_field(
             $this->prefix."api_url",
-            __('Geneco API URL', 'geneco-plans'),
+            __('Geneco Plans API URL', 'geneco-plans'),
             array($this, 'sandbox_add_settings_field_input_url'),
             $settings_id,
             $settngs_section_id,
@@ -153,7 +154,7 @@ class Geneco_Plans_Admin
 
         add_settings_field(
             $this->prefix."api_username",
-            __('Geneco API Username', 'geneco-plans'),
+            __('Geneco Plans API Username', 'geneco-plans'),
             array($this, 'sandbox_add_settings_field_input_text'),
             $settings_id,
             $settngs_section_id,
@@ -166,7 +167,7 @@ class Geneco_Plans_Admin
 
         add_settings_field(
             $this->prefix."api_password",
-            __('Geneco API Password', 'geneco-plans'),
+            __('Geneco Plans API Password', 'geneco-plans'),
             array($this, 'sandbox_add_settings_field_input_text'),
             $settings_id,
             $settngs_section_id,
@@ -174,6 +175,19 @@ class Geneco_Plans_Admin
                 'label_for'		=> $this->prefix."api_password",
                 'default' 		=> '',
                 'description'	=> __('The password used for Geneco Plans API to retrieve the plans', 'geneco-plans')
+            )
+        );
+
+        add_settings_field(
+            $this->prefix."rates_api_url",
+            __('Geneco Rates API URL', 'geneco-plans'),
+            array($this, 'sandbox_add_settings_field_input_url'),
+            $settings_id,
+            $settngs_section_id,
+            array(
+                'label_for'		=> $this->prefix."rates_api_url",
+                'default' 		=> '',                      // https://jsonplaceholder.typicode.com/posts
+                'description'	=> __('The URL for the Geneco Rates API from OPM', 'geneco-plans')
             )
         );
     }
@@ -316,9 +330,13 @@ class Geneco_Plans_Admin
     }
 
     /**
-     * Function to pull the plans through API
+     * Function to pull the plans through API, and save the data in the database. To retrieve the plan data, use this function - get_option('genapi_plans_data'). This function will also clear the cache from W3 Total Cache plugin.
      * 
      * @since    1.0.0
+     * 
+     * @param    string     $api_url        The URL to the plans API.
+     * @param    string     $username       The username to be used to call the API.
+     * @param    string     $password       The password to be used to call the API.
      */
     public function geneco_pull_plans_api($api_url = null, $username = null, $password = null)
     {

@@ -3,6 +3,22 @@
  * included in this file.
  */
 
+.noMarginBottom {
+    margin-bottom: 0 !important;
+}
+
+.marginBottom-5 {
+    margin-bottom: 5px !important;
+}
+
+.marginBottom-15 {
+    margin-bottom: 15px !important;
+}
+
+.marginBottom-30 {
+    margin-bottom: 30px !important;
+}
+
 .layer-genecoAdmin {}
 
 .layer-genecoAdmin .page-header {
@@ -29,7 +45,8 @@
 .layer-genecoAdmin .wrapper-genecoAdmin .layer-section {
     background-color: #FFF;
     border-radius: 10px;
-    margin: 15px 0 0;
+    border: 1px solid #DCDCDE;
+    margin-top: 15px;
     padding: 15px;
 }
 
@@ -47,4 +64,65 @@
 
 .wrapper-genecoAdmin .layer-preCode {
     overflow-y: auto;
+}
+
+.layer-usage {
+    border-bottom: 1px dashed #D9D9D9;
+    margin: 0 0 15px;
+    padding: 0 0 15px;
+}
+
+.layer-usage h3 {
+    margin-bottom: 0;
+}
+
+.layer-usage h4 {
+    margin-bottom: 8px;
+}
+
+.layer-usage p {
+    margin: 0 0 8px;
+}
+
+.layer-row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x)/ -2);
+    margin-left: calc(var(--bs-gutter-x)/ -2);
+}
+
+.layer-row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)/ 2);
+    padding-left: calc(var(--bs-gutter-x)/ 2);
+    margin-top: var(--bs-gutter-y);
+}
+
+@media (min-width: 576px) {
+    .layer-section.col-sm-6 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 2299px) {
+    .plugin-card {
+        border: 0;
+        width: calc(49.8% - 5px);
+    }
+    .plugin-card:nth-child(3n+1) {
+        clear: none;
+        margin-left: 16px;
+    }
+    .plugin-card:nth-child(3n) {
+        margin-left: 0;
+    }
+    .plugin-card:nth-child(even) {
+        margin-right: 0;
+    }
 }
