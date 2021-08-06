@@ -16,8 +16,11 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
 <?php
-    $plans_data = get_option('genapi_plans_data');
-    if ($plans_data) : 
+    $plans_data     = get_option('genapi_plans_data');
+    $plans_settings = get_option('genapi_settings');
+    $rates_data     = get_plans_rates();
+    $rates_api_url  = $plans_settings['genapi_rates_api_url'];
+    if ($plans_data) :
         $plans_obj  = json_decode(unserialize($plans_data));
 ?>
 
@@ -26,7 +29,7 @@
         <div class="row">
             
             <?php
-                foreach ($plans_obj as $key => $plan) :
+                foreach ($plans_obj as $key => $plan) : 
             ?>
             <div class="col-sm-3">
                 <div class="layer-genecoPlan">

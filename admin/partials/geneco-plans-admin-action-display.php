@@ -73,29 +73,57 @@
             <div class="layer-usages">
                 <div class="layer-usage">
                     <h3>Shortcode:</h3>
-                    <code>[<?php echo GENAPI_SHORTCODE; ?>]</code>
                     <p><em>You may use this shortcode to display all the plans on your page</em></p>
+                    <code>[<?php echo GENAPI_SHORTCODE; ?>]</code>
                 </div>
                 <div class="layer-usage">
                     <h3>PHP:</h3>
+                    <p><em>You may use this function inside the <code>&lt;?php ?&gt;</code> block.</em></p>
+
+                    <h4>Plans Data</h4>
                     <code>get_option('genapi_plans_data')</code>
-                    <p><em>You may use this function inside the <code>&lt;?php ?&gt;</code> block</em></p>
+                    <p><em>You will be returned with an array of plan objects.</em></p>
+
+                    <h4>Rates Data</h4>
+                    <code>get_plans_rates()</code>
+                    <p><em>You will be returned with arrays of arguments (parameters sent for API call), and data.</em></p>
                 </div>
                 <div class="layer-usage">
                     <h3>JavaScript:</h3>
+                    <p><em>You may use these variables directly inside your JavaScript scripts. <br /></em></p>
+
+                    <h4>General</h4>
                     <code>genecoObj</code>
-                    <em>or</em>
-                    <code>genecoObj.data</code>
-                    <p><em>You may use these variables directly inside your JavaScript scripts</em></p>
+                    <p><em>You will be returned with arrays of <strong>plansData</strong> and <strong>ratesData</strong>.</em></p>
+
+                    <h4>Plans Data</h4>
+                    <code>genecoObj.planData</code>
+                    <p><em>You will be returned with an array of plan objects.</em></p>
+
+                    <h4>Rates Data</h4>
+                    <p class="marginBottom-15"><em>Rates will be pulled automatically by parsing today's date + 28 days as the parameter for <strong>ContractDate</strong> argument.</em></p>
+                    <code>genecoObj.ratesData</code>
+                    <p><em>You will be returned with arrays of arguments (parameters sent for API call), and data.</em></p>
+                    <code>genecoObj.ratesData.data.Success</code>
+                    <p><em>To check if the rates pulling is success or not.</em></p>
+                    <code>genecoObj.ratesData.data.Result</code>
+                    <p><em>You will be returned with arrays of plan rates objects.</em></p>
                 </div>
             </div>
         </div>
         <?php endif; ?>
 
-        <div class="layer-section">
+        <div class="layer-section plugin-card">
             <div class="layer-preCode">
                 <h2>Plans Data Object</h2>
                 <pre><?php print_r($plans_obj); ?></pre>
+            </div>
+        </div>
+        
+        <div class="layer-section plugin-card">
+            <div class="layer-preCode">
+                <h2>Rates Data Object</h2>
+                <pre class="pre-rates"><?php print_r(geneco_pull_rates_api($plans_obj)); ?></pre>
             </div>
         </div>
         <?php 
@@ -105,21 +133,23 @@
 </div>
 
 <script type="text/javascript">
-    var hasPlans = <?php echo ($has_plans) ? $has_plans : 0; ?>;
-    jQuery(document).ready(function() {
-        jQuery('#form-pullAction').on('submit', function(e) {
-            var confirmText = (hasPlans) ? 'Are you sure you want to pull the plan data? The plan data will be overwritten if you proceed with the Pull Data action.' : 'Are you sure you want to pull the plan data?';
-            var retConfirm  = confirm(confirmText);
+    (function($) {
+        var hasPlans = <?php echo ($has_plans) ? $has_plans : 0; ?>;
+        $(document).ready(function() {
+            $('#form-pullAction').on('submit', function(e) {
+                var confirmText = (hasPlans) ? 'Are you sure you want to pull the plan data? The plan data will be overwritten if you proceed with the Pull Data action.' : 'Are you sure you want to pull the plan data?';
+                var retConfirm  = confirm(confirmText);
 
-            if (!retConfirm) {
-                var cancelText  = (hasPlans) ? 'Pull data action has been cancelled. Plan data will not be updated.' : 'Pull data action has been cancelled.';
+                if (!retConfirm) {
+                    var cancelText  = (hasPlans) ? 'Pull data action has been cancelled. Plan data will not be updated.' : 'Pull data action has been cancelled.';
 
-                setTimeout(function() {
-                    alert(cancelText);
-                }, 500);
+                    setTimeout(function() {
+                        alert(cancelText);
+                    }, 500);
 
-                e.preventDefault();
-            }
+                    e.preventDefault();
+                }
+            });
         });
-    });
+    })(jQuery);
 </script>

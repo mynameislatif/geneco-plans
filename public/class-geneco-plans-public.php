@@ -46,12 +46,13 @@ class Geneco_Plans_Public
      *
      * @since    1.0.0
      * @param      string    $plugin_name       The name of the plugin.
-     * @param      string    $version    The version of this plugin.
+     * @param      string    $version           The version of this plugin.
      */
     public function __construct($plugin_name, $version)
     {
-        $this->plugin_name = $plugin_name;
-        $this->version = $version;
+        $this->plugin_name      = $plugin_name;
+        $this->version          = $version;
+        $this->genapi_options   = get_option('genapi_settings');
     }
 
     /**
@@ -71,7 +72,7 @@ class Geneco_Plans_Public
      */
     public function enqueue_scripts()
     {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/geneco-plans-public.js', array( 'jquery' ), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/geneco-plans-public.js', array( 'jquery' ), $this->version, true);
 
         $this->enqueue_js_variable_data();
     }
@@ -103,11 +104,14 @@ class Geneco_Plans_Public
      */
     public function enqueue_js_variable_data()
     {
-        $geneco_obj = [];
+        $geneco_obj = ['planData' => [], 'ratesData' => []];
         $plans_data = get_option('genapi_plans_data');
 
         if ($plans_data) {
-            $geneco_obj['data'] = json_decode(unserialize($plans_data));
+            $plans      = json_decode(unserialize($plans_data));
+            $rates_pull = geneco_pull_rates_api($plans);
+            $geneco_obj['planData']     = $plans;
+            $geneco_obj['ratesData']    = $rates_pull;
         }
 
         wp_localize_script($this->plugin_name, 'genecoObj', $geneco_obj);
