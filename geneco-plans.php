@@ -9,7 +9,7 @@
  * Plugin Name:       Geneco Plans
  * Plugin URI:        https://geneco.sg
  * Description:       Plugin to pull and show the plans for Geneco.sg website.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            YTL Digital Design [AL Latif Mohamad]
  * Author URI:        https://www.ytl.com/technology.asp
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if (! defined('WPINC')) {
  * Current plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define('GENECO_PLANS_VERSION', '1.1.0');
+define('GENECO_PLANS_VERSION', '1.2.0');
 
 /**
  * Prefix for all plugin's options.
@@ -38,6 +38,11 @@ define('GENAPI_PREFIX', 'genapi_');
  * Shortcode for Geneco Plans API.
  */
 define('GENAPI_SHORTCODE', 'geneco_plans_api');
+
+/**
+ * Shortcode for Geneco B2B Plans API.
+ */
+define('GENAPI_B2B_SHORTCODE', 'geneco_b2b_plans_api');
 
 /**
  * The code that runs during plugin activation.

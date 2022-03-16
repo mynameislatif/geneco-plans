@@ -36,5 +36,7 @@ class Geneco_Plans_Activator
         
         add_option($prefix."plans_data", '');
         add_option($prefix."updated_at", '');
+        add_option($prefix."b2b_plans_data", '');
+        add_option($prefix."b2b_updated_at", '');
     }
 }

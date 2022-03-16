@@ -162,7 +162,7 @@ class Geneco_Plans
 
         $this->loader->add_action('admin_init', $plugin_admin, 'register_settings');
         $this->loader->add_action('admin_menu', $plugin_admin, 'register_settings_page');
-        $this->loader->add_action('admin_menu', $plugin_admin, 'register_action_page');
+        $this->loader->add_action('admin_menu', $plugin_admin, 'register_action_pages');
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
@@ -180,7 +180,8 @@ class Geneco_Plans
         $plugin_public = new Geneco_Plans_Public($this->get_plugin_name(), $this->get_version());
 
         if (!is_admin() && defined('GENAPI_SHORTCODE')) {
-            $this->loader->add_shortcode(GENAPI_SHORTCODE, $plugin_public, 'register_shortcode');
+            if (defined('GENAPI_SHORTCODE')) $this->loader->add_shortcode(GENAPI_SHORTCODE, $plugin_public, 'register_plan_shortcode');
+            if (defined('GENAPI_B2B_SHORTCODE')) $this->loader->add_shortcode(GENAPI_B2B_SHORTCODE, $plugin_public, 'register_b2b_plan_shortcode');
 
             $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
             $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');

@@ -82,7 +82,7 @@ class Geneco_Plans_Public
      *
      * @since    1.0.0
      */
-    public function register_shortcode()
+    public function register_plan_shortcode()
     {
         return $this->plans_html();
     }
@@ -104,16 +104,39 @@ class Geneco_Plans_Public
      */
     public function enqueue_js_variable_data()
     {
-        $geneco_obj = ['planData' => [], 'ratesData' => []];
-        $plans_data = get_option('genapi_plans_data');
+        $geneco_obj     = ['planData' => [], 'ratesData' => [], 'b2bPlanData' => []];
+        $plans_data     = get_option('genapi_plans_data');
+        $b2b_plans_data = get_option('genapi_b2b_plans_data');
 
         if ($plans_data) {
             $plans      = json_decode(unserialize($plans_data));
             $rates_pull = geneco_pull_rates_api($plans);
+            $b2b_plans  = json_decode(unserialize($b2b_plans_data));
             $geneco_obj['planData']     = $plans;
             $geneco_obj['ratesData']    = $rates_pull;
+            $geneco_obj['b2bPlanData']  = $b2b_plans;
         }
 
         wp_localize_script($this->plugin_name, 'genecoObj', $geneco_obj);
+    }
+
+    /**
+     * Localize the script for js variable usage
+     * 
+     * @since    1.2.0
+     */
+    public function register_b2b_plan_shortcode()
+    {
+        return $this->b2b_plans_html();
+    }
+
+    /**
+     * Display the plans HTML rendered from the plans data for the public-facing side of the site.
+     *
+     * @since    1.2.0
+     */
+    public function b2b_plans_html()
+    {
+        require_once plugin_dir_path(dirname(__FILE__)).'public/partials/geneco-b2b-plans-display.php';
     }
 }

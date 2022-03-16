@@ -21,12 +21,13 @@
     </div>
     <div class="nav-tab-wrapper">
         <a href="javascript:void(0)" class="nav-tab nav-tab-active">API Information Settings</a>
-        <a href="?page=geneco-plans-action" class="nav-tab">Pull Plans Action</a>
+        <a href="?page=geneco-plans-action" class="nav-tab">Pull Residential Plans</a>
+        <a href="?page=geneco-b2b-plans-action" class="nav-tab">Pull B2B Plans</a>
     </div>
     
     <div class="wrapper-genecoAdmin">
         <div class="layer-section">
-            <h2>API Information Settings</h2>
+            <h2>Residential API Information Settings</h2>
             
             <?php settings_errors('genapi_messages'); ?>
 
