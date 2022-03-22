@@ -84,6 +84,10 @@
                     <h4>Plans Data</h4>
                     <code style="margin-bottom: 8px;">$b2b_plans_data = get_option('genapi_b2b_plans_data'); <br />$b2b_plan_obj   = json_decode(unserialize($plans_data));</code>
                     <p><em>You will be returned with an array of plan objects.</em></p>
+
+                    <h4>Rates Data</h4>
+                    <code>get_b2b_plans_rates()</code>
+                    <p><em>You will be returned with arrays of arguments (parameters sent for API call), and data.</em></p>
                 </div>
                 <div class="layer-usage">
                     <h3>JavaScript:</h3>
@@ -96,15 +100,31 @@
                     <h4>B2B Plans Data</h4>
                     <code>genecoObj.b2bPlanData</code>
                     <p><em>You will be returned with an array of B2B plan objects.</em></p>
+
+                    <h4>B2B Rates Data</h4>
+                    <p class="marginBottom-15"><em>B2B Rates will be pulled automatically by parsing today's date + 28 days as the parameter for <strong>ContractDate</strong> argument.</em></p>
+                    <code>genecoObj.b2bRatesData</code>
+                    <p><em>You will be returned with arrays of arguments (parameters sent for API call), and data.</em></p>
+                    <code>genecoObj.b2bRatesData.data.Success</code>
+                    <p><em>To check if the rates pulling is success or not.</em></p>
+                    <code>genecoObj.b2bRatesData.data.Result</code>
+                    <p><em>You will be returned with arrays of plan rates objects.</em></p>
                 </div>
             </div>
         </div>
         <?php endif; ?>
 
-        <div class="layer-section plugin-cards">
+        <div class="layer-section plugin-card">
             <div class="layer-preCode">
                 <h2>B2B Plans Data Object</h2>
                 <pre><?php print_r($plans_obj); ?></pre>
+            </div>
+        </div>
+        
+        <div class="layer-section plugin-card">
+            <div class="layer-preCode">
+                <h2>B2B Rates Data Object</h2>
+                <pre class="pre-rates"><?php print_r(get_b2b_plans_rates($plans_obj)); ?></pre>
             </div>
         </div>
         <?php 

@@ -112,9 +112,12 @@ class Geneco_Plans_Public
             $plans      = json_decode(unserialize($plans_data));
             $rates_pull = geneco_pull_rates_api($plans);
             $b2b_plans  = json_decode(unserialize($b2b_plans_data));
+            $b2b_rates_pull = geneco_pull_b2b_rates_api($b2b_plans);
+            
             $geneco_obj['planData']     = $plans;
             $geneco_obj['ratesData']    = $rates_pull;
             $geneco_obj['b2bPlanData']  = $b2b_plans;
+            $geneco_obj['b2bRatesData'] = $b2b_rates_pull;
         }
 
         wp_localize_script($this->plugin_name, 'genecoObj', $geneco_obj);

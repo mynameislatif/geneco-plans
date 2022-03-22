@@ -237,6 +237,19 @@ class Geneco_Plans_Admin
                 'description'    => __('The password used for Geneco B2B Plans API to retrieve the plans', 'geneco-plans')
             )
         );
+
+        add_settings_field(
+            $this->prefix . "b2b_rates_api_url",
+            __('Geneco B2B Rates API URL', 'geneco-plans'),
+            array($this, 'sandbox_add_settings_field_input_url'),
+            $settings_id,
+            $b2b_settngs_section_id,
+            array(
+                'label_for'        => $this->prefix . "b2b_rates_api_url",
+                'default'         => '',
+                'description'    => __('The URL for the Geneco B2B Rates API from OPM', 'geneco-plans')
+            )
+        );
     }
 
     /**

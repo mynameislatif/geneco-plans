@@ -153,3 +153,68 @@ function get_plans_rates()
 
     return geneco_pull_rates_api($plans);
 }
+
+
+/**
+ * Function to B2B pull rates from API
+ * 
+ * @since    1.2.0
+ * 
+ * @param    array      $plans      Object array of plans which can be retrieved from the database - get_option('genapi_plans_data')
+ * @return   array
+ */
+function geneco_pull_b2b_rates_api($plans = [])
+{
+    $return         = ['args' => [], 'data' => []];
+    $genapi_options = get_option('genapi_settings');
+    $rates_api_url  = $genapi_options['genapi_b2b_rates_api_url'];
+
+    if ($rates_api_url) {
+        $rates_params   = [];
+        $cur_date       = date('Y-m-d');
+        $contract_date  = date('Y-m-d', strtotime($cur_date . ' + 28 days'));
+    
+        foreach ($plans as $plan) {
+            $rate_reference = $plan->RateReference;
+            $plan_code      = $plan->ReferenceCode;
+    
+            if ($rate_reference && $plan_code) {
+                $rates_param    = [
+                    'PlanName'      => $plan->Name, 
+                    'ContractDate'  => $contract_date, 
+                    'RateReference' => $rate_reference, 
+                    'PlanCode'      => $plan_code 
+                ];
+                $rates_params[] = $rates_param;
+            }
+        }
+    
+        $response   = wp_remote_post($rates_api_url, [
+            'headers'       => array('Content-Type' => 'application/json; charset=utf-8'),
+            'body'          => json_encode($rates_params),
+            'data_format'   => 'body'
+        ]);
+        $return     = [
+            'args'  => $rates_params, 
+            'data'  => json_decode($response['body']) 
+        ];
+    }
+    
+    return $return;
+}
+
+
+/**
+ * Function to get B2B plans without arguments. This function will get the plan data and continue pulling the rates through API
+ * 
+ * @since    1.2.0
+ * 
+ * @return   array
+ */
+function get_b2b_plans_rates() 
+{
+    $plans_data = get_option('genapi_b2b_plans_data');
+    $plans      = json_decode(unserialize($plans_data));
+
+    return geneco_pull_b2b_rates_api($plans);
+}
