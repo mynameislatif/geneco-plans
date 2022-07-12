@@ -217,4 +217,4 @@ function get_b2b_plans_rates()
     $plans      = json_decode(unserialize($plans_data));
 
     return geneco_pull_b2b_rates_api($plans);
-} 
+}
